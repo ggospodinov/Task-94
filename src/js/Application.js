@@ -12,10 +12,29 @@ export default class Application extends EventEmitter {
     this.emojis = [];
     this.banana = "🍌";
     this.emit(Application.events.READY);
+    this.div = document.getElementById("emojis");
   }
   setEmojis(emojis) {
     this.emojis = emojis;
+
+    this.removeAllChildNodes(this.div);
+    
+    this.emojis.forEach(emoji => {
+      const p = document.createElement("p")
+      p.textContent = emoji;
+      this.div.appendChild(p)
+    })
   }
 
-  addBananas() {}
+  addBananas() {
+    const monkyes = this.emojis.map(element =>{
+      return element += this.banana
+    })
+    this.setEmojis(monkyes);
+  }
+  removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
 }
